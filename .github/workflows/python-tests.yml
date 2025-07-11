@@ -3,7 +3,7 @@ name: Tests Calculatrice
 on:
   push:
     branches:
-      - '**'           # Toutes les branches
+      - '**'
   pull_request:
     branches:
       - '**'
@@ -26,10 +26,5 @@ jobs:
           python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Ajouter src au PYTHONPATH
-        run: |
-          echo "PYTHONPATH=$GITHUB_WORKSPACE/src" >> $GITHUB_ENV
-
-      - name: Lancer les tests avec pytest
-        run: |
-          pytest tests/
+      - name: Lancer les tests avec PYTHONPATH
+        run: PYTHONPATH=src pytest tests/
