@@ -1,9 +1,12 @@
 name: Tests Calculatrice
 
-# Déclenchement automatique sur push et pull_request
 on:
-  - push
-  - pull_request
+  push:
+    branches:
+      - '**'           # Toutes les branches
+  pull_request:
+    branches:
+      - '**'
 
 jobs:
   test:
@@ -20,11 +23,13 @@ jobs:
 
       - name: Installer les dépendances
         run: |
-          pip install --upgrade pip
+          python -m pip install --upgrade pip
           pip install -r requirements.txt
 
-      - name: Définir PYTHONPATH pour trouver src/
-        run: echo "PYTHONPATH=$GITHUB_WORKSPACE/src" >> $GITHUB_ENV
+      - name: Ajouter src au PYTHONPATH
+        run: |
+          echo "PYTHONPATH=$GITHUB_WORKSPACE/src" >> $GITHUB_ENV
 
       - name: Lancer les tests avec pytest
-        run: pytest tests/
+        run: |
+          pytest tests/
